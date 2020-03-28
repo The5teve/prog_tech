@@ -1,0 +1,74 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="hat_text" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColor">@color/colorLightGrey</item>
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="buttons_large">
+        <item name="android:textColor">@color/colorLightGrey</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="buttons_medium">
+        <item name="android:textColor">@color/colorLightGrey</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="mainblock_titles">
+        <item name="android:layout_weight">0.05</item>
+        <item name="android:textColor">@color/colorPrimaryDarkOrange</item>
+        <item name="android:paddingLeft">@dimen/main_list_titlesLeftPadding</item>
+        <item name="android:textSize">@dimen/main_mainBlock_titlesFontSize</item>
+    </style>
+
+    <style name="mainBlock_fileListElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/mainBlock_listElement_sidesMargin</item>
+    </style>
+
+    <style name="mainBlock_lists">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">0.6</item>
+        <item name="android:padding">@dimen/mainBlock_listElement_sidesMargin</item>
+    </style>
+
+    <style name="mainBlock_listButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_marginBottom">@dimen/mainBlock_listButton_marginBottom</item>
+        <item name="android:text">@string/listButtons_editList</item>
+    </style>
+
+    <style name="mainBlock_mailListElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/mainBlock_listElement_sidesMargin</item>
+    </style>
+
+    <style name="lists_title">
+        <item name="android:padding">@dimen/listActivity_title_padding</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="listActivity_titleText">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="mailListActivity_listElement">
+        <item name="android:textColor">@color/colorPrimaryDarkOrange</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/colorPrimaryDarkOrange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/tw_appTitle"
+            style="@style/hat_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/hat_topPadding"
+            android:layout_marginBottom="@dimen/hat_botPadding"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_mainBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mainBlock_topBottomMargin"
+        android:layout_marginBottom="@dimen/mainBlock_topBottomMargin"
+        android:background="@color/colorLightGrey">
+
+        <LinearLayout
+            android:id="@+id/layout_filesBlock"
+            android:layout_width="match_parent"
+            android:layout_height="375dp"
+            android:layout_marginEnd="@dimen/mainBlock_listElement_sidesMargin"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/mainblock_titles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/files_title" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0"/>
+
+            <LinearLayout android:id="@+id/LinearLayout_fileList"
+                style="@style/mainBlock_lists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_fileListElement"-->
+<!--                    android:text="Файл 1" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_fileListElement"-->
+<!--                    android:text="Файл 2" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_fileListElement"-->
+<!--                    android:text="Файл 3" />-->
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_gravity="start"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDarkOrange"/>
+
+            <Button
+                android:id="@+id/button_toFiles"
+                style="@style/mainBlock_listButton" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_mailsBlock"
+            android:layout_width="match_parent"
+            android:layout_height="375dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/mainblock_titles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mails_list_title" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_mailList"
+                style="@style/mainBlock_lists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_mailListElement"-->
+<!--                    android:text="Mail 1" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_mailListElement"-->
+<!--                    android:text="Mail 2" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_mailListElement"-->
+<!--                    android:text="Mail 3" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/mainBlock_mailListElement"-->
+<!--                    android:text="Mail 4" />-->
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_gravity="start"
+                android:layout_height="2dp"
+                android:background="@color/colorAccent"/>
+
+            <Button
+                android:id="@+id/button_tomails"
+                style="@style/mainBlock_listButton" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2">
+
+        <Button
+            android:id="@+id/button_send"
+            style="@style/buttons_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/floor_button_endMargin"
+            android:text="Отправить" />
+
+    </RelativeLayout>
+
+</LinearLayout>

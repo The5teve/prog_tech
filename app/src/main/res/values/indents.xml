@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hat_botPadding">5dp</dimen>
+    <dimen name="hat_topPadding">10dp</dimen>
+    <dimen name="hat_topMargin">1dp</dimen>
+    <dimen name="mainBlock_listElement_sidesMargin">5dp</dimen>
+    <dimen name="main_list_titlesLeftPadding">25dp</dimen>
+
+    <dimen name="mainBlock_topBottomMargin">15dp</dimen>
+    <dimen name="mainBlock_listButton_marginBottom">5dp</dimen>
+    <dimen name="floor_button_endMargin">60dp</dimen>
+
+    <dimen name="listActivity_title_padding">25dp</dimen>
+    <dimen name="listActivity_padding">10dp</dimen>
+</resources>

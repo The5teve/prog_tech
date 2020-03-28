@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AllSafe Project</string>
+    <string name="app_version">v0.1.0</string>
+    <string name="files_title">Файлы</string>
+    <string name="mails_list_title">Почтовые адреса</string>
+    <string name="mails_list_addMail">Добавить
+        адрес</string>
+    <string name="listButtons_editList">Изменить</string>
+    <string name="button_send">Отправить</string>
+</resources>

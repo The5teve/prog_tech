@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".MailListActivity">
+
+
+    <RelativeLayout
+        style="@style/lists_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tw_mailsList_title"
+        android:background="@color/colorLightGrey">
+
+        <ImageButton android:id="@+id/imageButton_mailsList_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:onClick="backToMain"/>
+
+        <TextView
+            style="@style/listActivity_titleText"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mails_list_title"
+            android:layout_toEndOf="@id/imageButton_mailsList_backButton"/>
+
+    </RelativeLayout>
+
+
+    <View android:id="@+id/space_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDarkOrange"
+        android:layout_below="@id/tw_mailsList_title"
+        />
+
+    <LinearLayout android:id="@+id/LinearLayout_mailListActivity_mailList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space_divider"
+        android:orientation="vertical">
+
+<!--        <TextView-->
+<!--            style="@style/mailListActivity_listElement"-->
+<!--            android:text="Mail 1"/>-->
+
+
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="0.75"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/mails_list_title"-->
+<!--            android:textAlignment="center"/>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Text 1" />-->
+
+
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
+        <EditText android:id="@+id/et_mailInput"
+            android:layout_weight="0.75"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="input mail" />
+        <Button android:id="@+id/button_addMail"
+            android:layout_weight="0.25"
+            style="@style/buttons_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mails_list_addMail" />
+    </LinearLayout>
+
+</RelativeLayout>
