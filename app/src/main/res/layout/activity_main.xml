@@ -21,16 +21,14 @@
             android:layout_marginBottom="@dimen/hat_botPadding"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_mainBlock"
+    <LinearLayout android:id="@+id/layout_mainBlock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mainBlock_topBottomMargin"
         android:layout_marginBottom="@dimen/mainBlock_topBottomMargin"
         android:background="@color/colorLightGrey">
 
-        <LinearLayout
-            android:id="@+id/layout_filesBlock"
+        <LinearLayout android:id="@+id/layout_filesBlock"
             android:layout_width="match_parent"
             android:layout_height="375dp"
             android:layout_marginEnd="@dimen/mainBlock_listElement_sidesMargin"
@@ -73,13 +71,11 @@
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkOrange"/>
 
-            <Button
-                android:id="@+id/button_toFiles"
+            <Button android:id="@+id/button_toFiles"
                 style="@style/mainBlock_listButton" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_mailsBlock"
+        <LinearLayout android:id="@+id/layout_mailsBlock"
             android:layout_width="match_parent"
             android:layout_height="375dp"
             android:layout_weight="0.5"
@@ -97,8 +93,7 @@
                 android:layout_height="2dp"
                 android:background="#c0c0c0"/>
 
-            <LinearLayout
-                android:id="@+id/linearLayout_mailList"
+            <LinearLayout android:id="@+id/linearLayout_mailList"
                 style="@style/mainBlock_lists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -127,8 +122,7 @@
                 android:layout_height="2dp"
                 android:background="@color/colorAccent"/>
 
-            <Button
-                android:id="@+id/button_tomails"
+            <Button android:id="@+id/button_tomails"
                 style="@style/mainBlock_listButton" />
         </LinearLayout>
 
@@ -140,8 +134,14 @@
         android:layout_height="0dp"
         android:layout_weight="0.2">
 
-        <Button
-            android:id="@+id/button_send"
+        <View
+            android:layout_alignTop="@id/button_send"
+            android:layout_width="100dp"
+            android:layout_gravity="start"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"/>
+
+        <Button android:id="@+id/button_send"
             style="@style/buttons_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/floor_button_endMargin"
-            android:text="Отправить" />
+            android:text="@string/button_send" />
 
     </RelativeLayout>
 

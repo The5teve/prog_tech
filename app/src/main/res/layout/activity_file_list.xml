@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".FileListActivity">
+
+    <RelativeLayout android:id="@+id/tw_fileList_title"
+        style="@style/lists_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightGrey">
+
+        <ImageButton android:id="@+id/imageButton_fileList_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+            style="@style/listActivity_titleText"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/files_title"
+            android:layout_toEndOf="@id/imageButton_fileList_backButton"/>
+
+    </RelativeLayout>
+
+
+    <View android:id="@+id/space_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDarkOrange"
+        android:layout_below="@id/tw_fileList_title"
+        />
+
+    <ListView android:id="@+id/lw_fileListActivity_fileList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space_divider"
+        android:orientation="vertical">
+
+
+    </ListView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
+        <Button android:id="@+id/button_addFile"
+            android:layout_weight="0.25"
+            style="@style/buttons_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/files_list_addFile" />
+        <Button android:id="@+id/button_removeFile"
+            android:layout_weight="0.25"
+            style="@style/buttons_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/files_list_addFile" />
+    </LinearLayout>
+
+
+</RelativeLayout>

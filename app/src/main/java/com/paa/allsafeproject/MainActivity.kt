@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG:String = "MainActivity"
 
-    var attachedFiles:ArrayList<AttachedFile> = ArrayList()
+    var attachedFiles:java.util.ArrayList<String> = ArrayList() // TODO: Тип данных String! Исправить
     var mails:java.util.ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,14 +70,19 @@ class MainActivity : AppCompatActivity() {
             editMailsIntent.putStringArrayListExtra("MainActivity_MAILS", mails)
             startActivityForResult(editMailsIntent,1)
         }
-//        button_toFiles.setOnClickListener {
-//
-//        }
+        button_toFiles.setOnClickListener {
+            val editFilesIntent = Intent(this, FileListActivity::class.java)
+            editFilesIntent.putStringArrayListExtra("MainActivity_FILES", attachedFiles)
+            startActivityForResult(editFilesIntent,1)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d(TAG, "onActivityResult")
+        // отображение почт
         fillMailList(data?.getStringArrayListExtra("MAILS"))
+        // отображение файлов
+//        fillFileList(data?.getArray)
         super.onActivityResult(requestCode, resultCode, data)
     }
 }

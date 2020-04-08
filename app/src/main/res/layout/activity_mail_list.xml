@@ -19,8 +19,7 @@
         <ImageButton android:id="@+id/imageButton_mailsList_backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
-            android:onClick="backToMain"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             style="@style/listActivity_titleText"
