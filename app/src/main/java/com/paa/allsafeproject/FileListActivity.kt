@@ -4,19 +4,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.view.View
 import android.widget.Toast
+import com.paa.allsafeproject.data_structs.AttachedFile
 import kotlinx.android.synthetic.main.activity_file_list.*
 
 class FileListActivity : AppCompatActivity() {
 
-    private val TAG:String = "FilesListActivity"
+    private val TAG:String = "FileListActivity"
 
-    private var files:ArrayList<AttachedFile> = ArrayList<AttachedFile>()
+//    var filesData:FilesData = FilesData()
+    // Хранение в виде листа Parcelable-объектов AttachedFile вместо Parcelable-объекта FilesData
+    private val files: ArrayList<AttachedFile> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_file_list)
     }
@@ -24,14 +26,35 @@ class FileListActivity : AppCompatActivity() {
     override fun onResume() {
         setListeners()
         // Отображение данных
-        val f1:AttachedFile = AttachedFile("/storage/emulated/0/DCIM/edge.ppmx")
-        val f2:AttachedFile = AttachedFile("/storage/emulated/0/Music/Daughter - Youth.mp3")
-        val f3:AttachedFile = AttachedFile("/storage/emulated/0/.appodeal")
+        // Тестовые данные
+        val f1: AttachedFile =
+            AttachedFile("/storage/emulated/0/DCIM/edge.ppmx")
+        val f2: AttachedFile =
+            AttachedFile("/storage/emulated/0/Music/Daughter - Youth.mp3")
+        val f3: AttachedFile =
+            AttachedFile("/storage/emulated/0/.appodeal")
+        val f4: AttachedFile =
+            AttachedFile("/storage/emulated/0/DCIM/edge.ppmx")
+        val f5: AttachedFile =
+            AttachedFile("/storage/emulated/0/Music/Daughter - Youth.mp3")
+        val f6: AttachedFile =
+            AttachedFile("/storage/emulated/0/.appodeal")
+        val f7: AttachedFile =
+            AttachedFile("/storage/emulated/0/DCIM/edge.ppmx")
+        val f8: AttachedFile =
+            AttachedFile("/storage/emulated/0/Music/Daughter - Youth.mp3")
+        val f9: AttachedFile =
+            AttachedFile("/storage/emulated/0/.appodeal")
         files.add(f1)
         files.add(f2)
         files.add(f3)
-        val adapter = FileListAdapter(this, R.layout.view_file_rec, files)
-//        adapter.getView()
+        files.add(f4)
+        files.add(f5)
+        files.add(f6)
+        files.add(f7)
+        files.add(f8)
+        files.add(f9)
+        val adapter = FileListAdapter(applicationContext, R.layout.view_file_rec, files)
         lw_fileListActivity_fileList.adapter = adapter
         // parent - view родителя нажатого элемента; view - нажатый элемент; position - порядковый номер пункта в списке; id - идентификатор нажатого элемента
         lw_fileListActivity_fileList.setOnItemClickListener { parent, view, position, id ->
@@ -39,25 +62,23 @@ class FileListActivity : AppCompatActivity() {
             files.removeAt(position)
             adapter.notifyDataSetChanged()
         }
-//        lw_fileListActivity_fileList.setOnItemClickListener { parent, view, position, id ->
-//            Toast.makeText(this, (view as TextView).text, Toast.LENGTH_LONG).show()
-//        }
-
         Log.d(TAG, "onResume")
         super.onResume()
     }
 
     private fun setListeners() {
-        button_addFile.setOnClickListener {
+//        button_addFile.setOnClickListener {
+//
+//        }
+        imageButton_fileList_backButton.setOnClickListener { sendFilesToMainActivity(files) }
+    }
 
-        }
-        button_removeFile.setOnClickListener {
+    override fun onBackPressed() = sendFilesToMainActivity(files)
 
-        }
-        imageButton_fileList_backButton.setOnClickListener {
-            var mainActivityIntent:Intent = Intent()
-//            todo(Передача Intent: путь, название?, размер, лист файлов?)
-//            mainActivityIntent.putExtra("FILES_NAMES")
-        }
+    private fun sendFilesToMainActivity(files: ArrayList<AttachedFile>?) {
+        var toMainActivity:Intent = Intent()
+        toMainActivity.putExtra("FILES", files) // Почему-то null в итоге
+        setResult(RESULT_OK, toMainActivity)
+        finish()
     }
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:orientation="vertical"
     android:padding="10dp"
     android:background="#FFFFFF"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:background="@color/colorPrimaryDarkOrange"
@@ -26,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mainBlock_topBottomMargin"
         android:layout_marginBottom="@dimen/mainBlock_topBottomMargin"
-        android:background="@color/colorLightGrey">
+        android:background="@color/colorLightGrey"
+
+        android:orientation="vertical">
 
         <LinearLayout android:id="@+id/layout_filesBlock"
             android:layout_width="match_parent"
@@ -46,24 +52,11 @@
                 android:layout_height="2dp"
                 android:background="#c0c0c0"/>
 
-            <LinearLayout android:id="@+id/LinearLayout_fileList"
+            <ListView android:id="@+id/MainActivity_ListView_fileList"
                 style="@style/mainBlock_lists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_fileListElement"-->
-<!--                    android:text="Файл 1" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_fileListElement"-->
-<!--                    android:text="Файл 2" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_fileListElement"-->
-<!--                    android:text="Файл 3" />-->
-
-            </LinearLayout>
+            </ListView>
 
             <View
                 android:layout_width="100dp"
@@ -93,6 +86,7 @@
                 android:layout_height="2dp"
                 android:background="#c0c0c0"/>
 
+            <!--todo Заменить LinearLayout для почт на ListView-->
             <LinearLayout android:id="@+id/linearLayout_mailList"
                 style="@style/mainBlock_lists"
                 android:layout_width="match_parent"
@@ -154,3 +148,4 @@
     </RelativeLayout>
 
 </LinearLayout>
+</ScrollView>

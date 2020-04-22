@@ -9,7 +9,7 @@
 
     <style name="hat_text" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/colorLightGrey</item>
-        <item name="android:textSize">50sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="buttons_large">
@@ -24,6 +24,7 @@
 
     <style name="mainblock_titles">
         <item name="android:layout_weight">0.05</item>
+        <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/colorPrimaryDarkOrange</item>
         <item name="android:paddingLeft">@dimen/main_list_titlesLeftPadding</item>
         <item name="android:textSize">@dimen/main_mainBlock_titlesFontSize</item>

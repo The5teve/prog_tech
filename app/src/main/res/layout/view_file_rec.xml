@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:height="500dp">
     <View
         android:layout_width="4dp"
         android:layout_height="50dp"
@@ -30,13 +31,13 @@
             android:textColor="@color/colorPrimaryDarkOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="d:/tests">
-
+            android:layout_gravity="center"
+            android:text="tw_fileRecord_path">
         </TextView>
         <TextView android:id="@+id/tw_fileRecord_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 MB"
+            android:text="tw_fileRecord_size"
             android:layout_gravity="center"/>
     </LinearLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_mail_list.*
@@ -21,12 +22,20 @@ class MailListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mail_list)
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun fillMailListView(list: ArrayList<String>?) {
+        if (list != null) {
+            for (mailString in list) {
+//                var lw:LinearLayout = findViewById<LinearLayout>(R.id.linearLayout_mailList)
+                var tw:TextView = TextView(applicationContext)
+                tw.text = mailString
+                LinearLayout_mailListActivity_mailList.addView(tw)
+            }
+        }
     }
 
     override fun onResume() {
         setListeners()
+        fillMailListView(intent.getStringArrayListExtra("MAILS"))
         super.onResume()
     }
 
