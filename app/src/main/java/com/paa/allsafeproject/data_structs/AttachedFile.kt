@@ -33,7 +33,7 @@ class AttachedFile(val path: String,
         }
 
         override fun newArray(size: Int): Array<AttachedFile?> {
-            return newArray(size)
+            return newArray(size) //?
         }
     }
 

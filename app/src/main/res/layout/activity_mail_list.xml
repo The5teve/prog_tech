@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -39,45 +38,13 @@
         android:layout_below="@id/tw_mailsList_title"
         />
 
-    <LinearLayout android:id="@+id/LinearLayout_mailListActivity_mailList"
+    <ListView android:id="@+id/lw_mailListActivity_mailList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/space_divider"
         android:orientation="vertical">
 
-<!--        <TextView-->
-<!--            style="@style/mailListActivity_listElement"-->
-<!--            android:text="Mail 1"/>-->
-
-
-    </LinearLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_weight="0.75"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/mails_list_title"-->
-<!--            android:textAlignment="center"/>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Text 1" />-->
-
-
-<!--        </LinearLayout>-->
-
-<!--    </LinearLayout>-->
+    </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"

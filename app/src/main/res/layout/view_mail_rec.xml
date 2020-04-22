@@ -5,11 +5,11 @@
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_file"
+        android:src="@drawable/ic_mail"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"/>
-    <TextView android:id="@+id/tw_file_rec_small_name"
+    <TextView android:id="@+id/tw_mail_rec_small_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="tw_file_rec_small_name"/>
+        android:text="tw_mail_rec_small_name"/>
 </LinearLayout>

@@ -86,29 +86,12 @@
                 android:layout_height="2dp"
                 android:background="#c0c0c0"/>
 
-            <!--todo Заменить LinearLayout для почт на ListView-->
-            <LinearLayout android:id="@+id/linearLayout_mailList"
+            <ListView android:id="@+id/MainActivity_listView_mailList"
                 style="@style/mainBlock_lists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_mailListElement"-->
-<!--                    android:text="Mail 1" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_mailListElement"-->
-<!--                    android:text="Mail 2" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_mailListElement"-->
-<!--                    android:text="Mail 3" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/mainBlock_mailListElement"-->
-<!--                    android:text="Mail 4" />-->
-
-            </LinearLayout>
+            </ListView>
 
             <View
                 android:layout_width="100dp"

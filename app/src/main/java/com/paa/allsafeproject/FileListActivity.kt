@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
+import com.paa.allsafeproject.adapters.FileListAdapter
 import com.paa.allsafeproject.data_structs.AttachedFile
 import kotlinx.android.synthetic.main.activity_file_list.*
 
@@ -13,12 +13,9 @@ class FileListActivity : AppCompatActivity() {
 
     private val TAG:String = "FileListActivity"
 
-//    var filesData:FilesData = FilesData()
-    // Хранение в виде листа Parcelable-объектов AttachedFile вместо Parcelable-объекта FilesData
     private val files: ArrayList<AttachedFile> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_file_list)
     }
@@ -54,7 +51,11 @@ class FileListActivity : AppCompatActivity() {
         files.add(f7)
         files.add(f8)
         files.add(f9)
-        val adapter = FileListAdapter(applicationContext, R.layout.view_file_rec, files)
+        val adapter = FileListAdapter(
+            applicationContext,
+            R.layout.view_file_rec,
+            files
+        )
         lw_fileListActivity_fileList.adapter = adapter
         // parent - view родителя нажатого элемента; view - нажатый элемент; position - порядковый номер пункта в списке; id - идентификатор нажатого элемента
         lw_fileListActivity_fileList.setOnItemClickListener { parent, view, position, id ->
@@ -67,17 +68,15 @@ class FileListActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-//        button_addFile.setOnClickListener {
-//
-//        }
+        button_addFile.setOnClickListener { /* todo: add file */ }
         imageButton_fileList_backButton.setOnClickListener { sendFilesToMainActivity(files) }
     }
 
     override fun onBackPressed() = sendFilesToMainActivity(files)
 
     private fun sendFilesToMainActivity(files: ArrayList<AttachedFile>?) {
-        var toMainActivity:Intent = Intent()
-        toMainActivity.putExtra("FILES", files) // Почему-то null в итоге
+        val toMainActivity = Intent()
+        toMainActivity.putExtra("FILES", files)
         setResult(RESULT_OK, toMainActivity)
         finish()
     }

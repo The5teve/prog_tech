@@ -6,7 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.paa.allsafeproject.adapters.FileListAdapter
+import com.paa.allsafeproject.adapters.MailListAdapter
+import com.paa.allsafeproject.adapters.MainActivityFileListAdapter
 import com.paa.allsafeproject.data_structs.AttachedFile
+import com.paa.allsafeproject.data_structs.AttachedMail
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG:String = "ACTIVITY_MAIN"
 
-    var mails:java.util.ArrayList<String> = ArrayList()
+    var mails:ArrayList<AttachedMail> = ArrayList()
     var files:ArrayList<AttachedFile> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +35,11 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    private fun fillMailListView(receivedMails: java.util.ArrayList<String>?) {
+    private fun fillMailListView(receivedMails: ArrayList<AttachedMail>?) {
         if (receivedMails != null) {
-            mails = receivedMails // плохо!
-            var ll_mailList: LinearLayout = linearLayout_mailList
-            for (i: String in mails) {
-                var tw = TextView(this)
-                tw.text = i
-                ll_mailList.addView(tw)
-            }
+            mails = receivedMails
+            val mailListAdapter:MailListAdapter = MailListAdapter(applicationContext, R.layout.view_mail_rec, mails)
+            MainActivity_listView_mailList.adapter = mailListAdapter
         } else {
             Log.d(TAG, "fillMailList: ArrayList of received mails is null")
         }
@@ -49,12 +49,9 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "fillFileList: received ArrayList of AttachedFiles = $receivedFiles")
         if (receivedFiles != null) {
             files = receivedFiles
-            var adapter:FileListAdapter = FileListAdapter(applicationContext, R.layout.view_file_rec, files)
+            var adapter: MainActivityFileListAdapter = MainActivityFileListAdapter(applicationContext, R.layout.view_file_rec_small, files)
             MainActivity_ListView_fileList.adapter = adapter
             Log.d(TAG, "files size ${files.size}")
-            for (f in files) {
-                Log.d(TAG, "DATA STRUCT ${f}")
-            }
         } else {
 //            Toast.makeText(applicationContext, "Cant fill files NullPointer", Toast.LENGTH_SHORT).show()
         }
@@ -64,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "setListeners method")
         button_tomails.setOnClickListener {
             val editMailsIntent = Intent(this, MailListActivity::class.java)
-            editMailsIntent.putStringArrayListExtra("MAILS", mails)
+            editMailsIntent.putParcelableArrayListExtra("MAILS", mails)
             Log.d(TAG, "Sending ${mails}")
             startActivityForResult(editMailsIntent,1)
         }
@@ -78,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d(TAG, "onActivityResult")
         // отображение почт
-        fillMailListView(data?.getStringArrayListExtra("MAILS"))
+        fillMailListView(data?.getParcelableArrayListExtra("MAILS"))
         // отображение файлов
         fillFileList(data?.getParcelableArrayListExtra("FILES"))
         super.onActivityResult(requestCode, resultCode, data)
