@@ -6,6 +6,8 @@ from tkinter import messagebox
 from PIL import ImageTk,Image
 import socket
 import base64
+
+
 root = Tk()
 root.geometry("800x450")
 root.title("Allsafe")
@@ -53,7 +55,7 @@ def choose_file():
 	global SetPaths
 	global Button_send
 	global SetMails
-	file_path =  filedialog.askopenfilename(initialdir = "/",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+	file_path =  filedialog.askopenfilename(initialdir = "/",title = "Select file", filetypes = (("all files","*.*"),("jpeg files","*.jpg")))
 	if len(file_path)>3:
 		tree1.insert("",0, text=os.path.split(file_path)[1], values=(str(os.path.getsize(file_path)/1024//1)+"KB"))
 		SetPaths.add(file_path)
@@ -68,16 +70,19 @@ def placehelptext(number):
 	print(os.urandom(3))
 	
 	if number == 1:
-		myHelp1=Label(helps, bg="#E6F0ED", borderwidth=0, fg="grey",text="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)")		
-		myHelp1.place(x=10,y=15)	
+		myHelp1=Label(helps, bg="#B3B3B3", borderwidth=0, fg="#333333",
+		text="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)")		
+		myHelp1.place(x=10,y=25)	
 
 	elif number == 2:
-		myHelp2=Label(helps,bg="#E6F0ED", borderwidth=0, fg="grey", text="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links")
-		myHelp2.place(x=10,y=180)
+		myHelp2=Label(helps,bg="#B3B3B3", borderwidth=0, fg="#333333", 
+		text="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links")
+		myHelp2.place(x=10,y=200)
 
 	else:
-		myHelp3=Label(helps,bg="#E6F0ED", borderwidth=0, fg="grey", text="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file")
-		myHelp3.place(x=10,y=320)
+		myHelp3=Label(helps,bg="#B3B3B3", borderwidth=0, fg="#333333", 
+		text="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file")
+		myHelp3.place(x=10,y=350)
 	
 
 
@@ -85,21 +90,24 @@ def placehelptext(number):
 def show_help():
     global helps
     helps = Toplevel()
-    helps['bg'] = '#E6F0ED'
-    helps.geometry("700x410")
+    helps['bg'] = '#B3B3B3'
+    helps.geometry("700x450")
     helps.resizable(False, False)
     #Label(a, text="About this").pack(expand=1)
     helps.grab_set()
     helps.focus_set()
     imghelp = ImageTk.PhotoImage(Image.open("img/hiw.png"))
-    LabelHelp = Label(helps,image=imghelp)
-    LabelHelp.place(x=180,y=0)
-    helpbutton1=Button(helps,text="What\n is it?",font=("Arial Bold", 13), bg="#E6F0ED", borderwidth=0, fg="grey", command=lambda: placehelptext(1))
-    helpbutton1.place(x=600,y=40)
-    helpbutton2=Button(helps,text="What\n is it?",font=("Arial Bold", 13), bg="#E6F0ED", borderwidth=0, fg="grey", command=lambda: placehelptext(2))
-    helpbutton2.place(x=600,y=180)
-    helpbutton3=Button(helps,text="What\n is it?",font=("Arial Bold", 13), bg="#E6F0ED", borderwidth=0, fg="grey", command=lambda: placehelptext(3))
-    helpbutton3.place(x=600,y=320)
+    LabelHelp = Label(helps,image=imghelp, borderwidth=0)
+    LabelHelp.place(x=350,y=0)
+    helpbutton1=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
+    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: placehelptext(1))
+    helpbutton1.place(x=600,y=50)
+    helpbutton2=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
+    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: placehelptext(2))
+    helpbutton2.place(x=600,y=200)
+    helpbutton3=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
+    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: placehelptext(3))
+    helpbutton3.place(x=600,y=350)
 	
     helps.mainloop()
     
@@ -164,17 +172,21 @@ my_frame1.grid(row=0, column=1)
 
 
 #Allsafe Title
-status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#242424", borderwidth=0, fg="#104981", font=("Arial Bold", 10), command=button_home)
+status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#242424", borderwidth=0,
+				 fg="#104981", font=("Arial Bold", 10), command=button_home)
 status.place(x=15,y=10)
 
 
 #News Label
-newslabel = Label(my_frame1, text="Allsafe", bg="#202020", fg="#171717", font=("Arial Bold", 90))
+newslabel = Label(my_frame1, text="Allsafe", bg="#202020",
+				 fg="#171717", font=("Arial Bold", 90))
 newslabel.place(x=270, y=150)
-newslabel1 = Label(my_frame1, text="cyberletters", bg="#202020", fg="#171717", font=("Arial Bold", 30))
+newslabel1 = Label(my_frame1, text="cyberletters", bg="#202020", 
+					fg="#171717", font=("Arial Bold", 30))
 newslabel1.place(x=370, y=260)
 #How it works
-helps = Button(my_frame, text="How it works?", bg="#181818", fg="#959595", borderwidth=0, command=show_help)
+helps = Button(my_frame, text="How it works?", bg="#181818", 
+				fg="#959595", borderwidth=0, command=show_help)
 helps.place(x=33, y=400)
 
 
@@ -226,7 +238,8 @@ tree1.place(x=400, y=155)
 
 Sending2= Label(subframe, text="Choose files yow want to send", borderwidth=0, bg="#1b2c45", fg="#666464")
 Sending2.place(x=10, y=130)
-Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11), bg="#b7bcb9",state=DISABLED, command=main_def_send_mail)
+Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11),
+					 bg="#b7bcb9",state=DISABLED, command=main_def_send_mail)
 Button_send.place(x=8, y=255)
 #SendMessage.place(x=430,y=330)
 #263e4d cиний
@@ -238,7 +251,8 @@ Button_send.place(x=8, y=255)
 
 
 sec0nd_frame = Frame(root, bg="#202020", width=650, height=450)
-WarningLabel = Label(sec0nd_frame, bg="#202020", text="AllSafe is a free program for the safe \n \ntransfer of mail letters. ", fg="white") 
+WarningLabel = Label(sec0nd_frame, bg="#202020",
+					 text="AllSafe is a free program for the safe \n \ntransfer of mail letters. ", fg="white") 
 WarningLabel.place(x=200, y=180)
 #Some things
 
