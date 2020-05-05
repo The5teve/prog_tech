@@ -3,17 +3,18 @@ from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import filedialog
 from tkinter import messagebox
-from PIL  import ImageTk,Image
+from PIL import ImageTk,Image
+import socket
+import base64
 root = Tk()
 root.geometry("800x450")
 root.title("AllSafe")
 root.resizable(False, False)
-
-
+root.iconbitmap('img/lock.ico')
 
 def main_def_send_mail():
+	global SetPaths
 	sends = Toplevel()
-	
 	sends['bg']='#202020'
 	sends.geometry("450x200")
 	sends.resizable(False, False)
@@ -22,12 +23,29 @@ def main_def_send_mail():
 	pb = ttk.Progressbar(sends, length=250)
 	pb.place(x=100, y=50)
 	pb.start(200)
-	#for i in range(2,100):
-	#	RANDOM.config(text=os.urandom(3))
+	#############################
+	sock = socket.socket()
+	sock.connect(('25.84.180.124', 8080)) #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
+	##################################
+	#handle = open("txt.txt","r") 
+	#data = handle.read()
+	#handle.close()
+	for path in SetPaths:
+		with open(path, 'rb') as file:
+			print (path)
+			sock.send(base64.encodebytes(file.read()).decode('utf-8').encode())
 
+	#sock.send(file.read())
+	#################################
+	#sock.send(data.encode())
+	s2 = sock.recv(4096)
+	print(s2.decode("UTF-8"))
+	sock.close()
+	#############################
 	sends.mainloop()
 
-###
+
+###CHOOSE FILE###
 SetPaths= set()
 def choose_file():
 	global tree1
@@ -42,6 +60,10 @@ def choose_file():
 		if len(SetMails)>0:
 			Button_send.config(state=NORMAL)
 
+
+
+
+###HOW THAT WORKS###
 def placehelptext(number):
 	print(os.urandom(3))
 	
@@ -59,7 +81,7 @@ def placehelptext(number):
 	
 
 
-
+###HOW THAT WORKS2###
 def show_help():
     global helps
     helps = Toplevel()
@@ -111,7 +133,12 @@ def validcheck():
 	global emailplace
 	global tree
 	global SetMails
+	alphabet= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.@'
 	temp=emailplace.get()
+	for char in temp:
+		if char not in alphabet:
+			messagebox.showerror("Error", "Wrong email.")
+			return False
 	if temp.find("@")==-1 or temp.find(".")==-1:
 		messagebox.showerror("Error", "Wrong mail type.")
 	else:	
@@ -178,7 +205,6 @@ addmail=Button(subframe, text="add mail", bg="#2f2f4f", fg="white", pady=1, comm
 addmail.place(x=295, y=9)
 
 
-
 #MAILS TREE
 tree=ttk.Treeview(subframe, height=6)
 tree.column("#0",stretch="NO")
@@ -197,8 +223,6 @@ tree1.place(x=400, y=155)
 
 
 
-
-
 Sending2= Label(subframe, text="Choose files yow want to send", borderwidth=0, bg="#2f2f4f", fg="#666464")
 Sending2.place(x=10, y=130)
 Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11), bg="#262652",state=DISABLED, command=main_def_send_mail)
@@ -206,12 +230,6 @@ Button_send.place(x=8, y=255)
 #SendMessage.place(x=430,y=330)
 #263e4d cиний
 #2f434f серый
-
-
-
-
-
-
 
 
 
