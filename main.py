@@ -27,7 +27,7 @@ def main_def_send_mail():
 	pb.start(200)
 	#############################
 	sock = socket.socket()
-	sock.connect(('25.84.180.124', 8080)) #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
+	sock.connect(('25.84.180.124', 8080))                             #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
 	##################################
 	#handle = open("txt.txt","r") 
 	#data = handle.read()
@@ -59,7 +59,7 @@ def choose_file():
 	if len(file_path)>3:
 		tree1.insert("",0, text=os.path.split(file_path)[1], values=(str(os.path.getsize(file_path)/1024//1)+"KB"))
 		SetPaths.add(file_path)
-		if len(SetMails)>0:
+		if SetMails:
 			Button_send.config(state=NORMAL)
 
 
@@ -91,7 +91,7 @@ def show_help():
     global helps
     helps = Toplevel()
     helps['bg'] = '#B3B3B3'
-    helps.geometry("700x450")
+    helps.geometry("660x450")
     helps.resizable(False, False)
     #Label(a, text="About this").pack(expand=1)
     helps.grab_set()
@@ -160,7 +160,7 @@ def validcheck():
 				emailplace.delete(0, END)
 		else:
 			messagebox.showerror("Error", "Wrong email.")		
-	if len(SetPaths)>0:
+	if SetPaths:
 		Button_send.config(state=NORMAL)
 
 helps = Label()
@@ -172,10 +172,14 @@ my_frame1.grid(row=0, column=1)
 
 
 #Allsafe Title
-status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#242424", borderwidth=0,
+status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#191919", borderwidth=0,
 				 fg="#104981", font=("Arial Bold", 10), command=button_home)
 status.place(x=15,y=10)
+#How it works
 
+helps = Button(my_frame, text="How it works?", bg="#181818", 
+				fg="#959595", borderwidth=0, command=show_help)
+helps.place(x=33, y=400)
 
 #News Label
 newslabel = Label(my_frame1, text="Allsafe", bg="#202020",
@@ -184,11 +188,11 @@ newslabel.place(x=270, y=150)
 newslabel1 = Label(my_frame1, text="cyberletters", bg="#202020", 
 					fg="#171717", font=("Arial Bold", 30))
 newslabel1.place(x=370, y=260)
-#How it works
-helps = Button(my_frame, text="How it works?", bg="#181818", 
-				fg="#959595", borderwidth=0, command=show_help)
-helps.place(x=33, y=400)
 
+#Allsafe logo
+logo = ImageTk.PhotoImage(Image.open("img/logo.png"))
+logoLabel = Label(my_frame1,image=logo, borderwidth=0)
+logoLabel.place(x=100,y=150)
 
 #Buttons
 
@@ -204,7 +208,7 @@ button_switch2.place(x=20, y=130)
 #switching frames
 f1rst_frame = Frame(root, bg="#202020", width=650, height=450)
 subframe = Frame(f1rst_frame, width=610, height=310, bg="#1b2c45")
-subframe.place(x=20, y=20)
+subframe.place(x=20, y=60)
 button_addfile = Button(subframe, padx=50, pady=10, text="Choose File", bg="#282828", fg="White", command=choose_file)
 button_addfile.place(x=10,y=80)
 Sending1= Label(subframe, text="Enter email here", borderwidth=0, bg="#1b2c45", fg="#666464")
