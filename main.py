@@ -8,9 +8,9 @@ import socket
 import base64
 root = Tk()
 root.geometry("800x450")
-root.title("AllSafe")
+root.title("Allsafe")
 root.resizable(False, False)
-root.iconbitmap('img/lock.ico')
+root.iconbitmap('img/allsafe.ico')
 
 def main_def_send_mail():
 	global SetPaths
@@ -68,15 +68,15 @@ def placehelptext(number):
 	print(os.urandom(3))
 	
 	if number == 1:
-		myHelp1=Label(helps, text="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)")		
+		myHelp1=Label(helps, bg="#E6F0ED", borderwidth=0, fg="grey",text="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)")		
 		myHelp1.place(x=10,y=15)	
 
 	elif number == 2:
-		myHelp2=Label(helps, text="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links")
+		myHelp2=Label(helps,bg="#E6F0ED", borderwidth=0, fg="grey", text="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links")
 		myHelp2.place(x=10,y=180)
 
 	else:
-		myHelp3=Label(helps,text="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file")
+		myHelp3=Label(helps,bg="#E6F0ED", borderwidth=0, fg="grey", text="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file")
 		myHelp3.place(x=10,y=320)
 	
 
@@ -164,14 +164,15 @@ my_frame1.grid(row=0, column=1)
 
 
 #Allsafe Title
-status = Button(my_frame, text="AllSafe Build 0.0.71", bg="#242424", borderwidth=0, fg="white", font=("Arial Bold", 10), command=button_home)
+status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#242424", borderwidth=0, fg="#104981", font=("Arial Bold", 10), command=button_home)
 status.place(x=15,y=10)
 
 
 #News Label
 newslabel = Label(my_frame1, text="Allsafe", bg="#202020", fg="#171717", font=("Arial Bold", 90))
 newslabel.place(x=270, y=150)
-
+newslabel1 = Label(my_frame1, text="cyberletters", bg="#202020", fg="#171717", font=("Arial Bold", 30))
+newslabel1.place(x=370, y=260)
 #How it works
 helps = Button(my_frame, text="How it works?", bg="#181818", fg="#959595", borderwidth=0, command=show_help)
 helps.place(x=33, y=400)
@@ -190,18 +191,18 @@ button_switch2.place(x=20, y=130)
 
 #switching frames
 f1rst_frame = Frame(root, bg="#202020", width=650, height=450)
-subframe = Frame(f1rst_frame, width=610, height=310, bg="#2f2f4f")
+subframe = Frame(f1rst_frame, width=610, height=310, bg="#1b2c45")
 subframe.place(x=20, y=20)
 button_addfile = Button(subframe, padx=50, pady=10, text="Choose File", bg="#282828", fg="White", command=choose_file)
 button_addfile.place(x=10,y=80)
-Sending1= Label(subframe, text="Enter email here", borderwidth=0, bg="#2f2f4f", fg="#666464")
+Sending1= Label(subframe, text="Enter email here", borderwidth=0, bg="#1b2c45", fg="#666464")
 Sending1.place(x=30, y=30)
 #Mail pole
 emailplace= Entry(subframe,width=45,bg="lightgrey", fg="black", borderwidth=0)
 emailplace.place(x=10, y=10)
 
 #addmail Button
-addmail=Button(subframe, text="add mail", bg="#2f2f4f", fg="white", pady=1, command=validcheck, borderwidth=0)
+addmail=Button(subframe, text="add mail", bg="#1b2c45", fg="white", pady=1, command=validcheck, borderwidth=0)
 addmail.place(x=295, y=9)
 
 
@@ -214,18 +215,18 @@ tree.place(x=400, y=5)
 
 tree1=ttk.Treeview(subframe, height=6)
 tree1["columns"]=("one")
-tree1.column("#0",width=150,stretch="NO")
+tree1.column("#0",stretch="NO", width=145)
 tree1.heading("#0",text="chosen files",anchor=W)
-tree1.column("one",stretch="NO")
+tree1.column("one",stretch="NO", width=55)
 tree1.heading("one",text=" ", anchor=W)
 #tree.insert("",1, text="your mail here") #for inserting
 tree1.place(x=400, y=155)
 
 
 
-Sending2= Label(subframe, text="Choose files yow want to send", borderwidth=0, bg="#2f2f4f", fg="#666464")
+Sending2= Label(subframe, text="Choose files yow want to send", borderwidth=0, bg="#1b2c45", fg="#666464")
 Sending2.place(x=10, y=130)
-Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11), bg="#262652",state=DISABLED, command=main_def_send_mail)
+Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11), bg="#b7bcb9",state=DISABLED, command=main_def_send_mail)
 Button_send.place(x=8, y=255)
 #SendMessage.place(x=430,y=330)
 #263e4d cиний
