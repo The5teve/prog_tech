@@ -216,7 +216,7 @@ logoLabel.place(x=100,y=150)
 button_switch1 = Button(my_frame, text="Let's send something!",bg="#181818", fg="lightgrey", borderwidth=0, command=show_f1rst_frame)
 button_switch1.place(x=20, y=100)
 
-button_switch2 = Button(my_frame, text="Show reference.", bg="#181818", fg="lightgrey", borderwidth=0, command=show_sec0nd_frame)
+button_switch2 = Button(my_frame, text="Show reference", bg="#181818", fg="lightgrey", borderwidth=0, command=show_sec0nd_frame)
 button_switch2.place(x=20, y=130)
 
 
