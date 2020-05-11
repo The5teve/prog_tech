@@ -6,7 +6,7 @@ from tkinter import messagebox
 from PIL import ImageTk,Image
 import socket
 import base64
-
+import time
 
 root = Tk()
 root.geometry("800x450")
@@ -25,35 +25,53 @@ style.configure("Treeview.Heading",
 
 def main_def_send_mail():
 	global SetPaths
-	sends = Toplevel()
-	sends['bg']='#202020'
-	sends.geometry("450x200")
-	sends.resizable(False, False)
-	RANDOM = Label(sends, text='Please wait...', bg="#202020", fg="white")
-	RANDOM.place(x=190,y=30)
-	pb = ttk.Progressbar(sends, length=250)
+	#sends = Toplevel()
+	#sends['bg']='#202020'
+	#sends.geometry("450x200")
+	#sends.resizable(False, False)
+	#RANDOM = Label(sends, text='Please wait...', bg="#202020", fg="white")
+	#RANDOM.place(x=190,y=30)
+	#pb = ttk.Progressbar(sends, length=250)
+	#pb.place(x=100, y=50)
+	#pb.start(200)
+
+	show_sec0nd_frame()
+	RANDOM = Label(sec0nd_frame, text='Please wait...', bg="#202020", fg="white")
+	RANDOM.place(x=100,y=100)
+	pb = ttk.Progressbar(sec0nd_frame, length=250)
 	pb.place(x=100, y=50)
 	pb.start(200)
 	#############################
 	sock = socket.socket()
-	sock.connect(('25.84.180.124', 8080))                             #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
+	sock.connect(('25.84.180.124', 8080)) 
+	sock.send(str(len(SetPaths)).encode())
+
+	                            #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
 	##################################
 	#handle = open("txt.txt","r") 
 	#data = handle.read()
 	#handle.close()
 	for path in SetPaths:
+		zagotovka=b'stop'
 		with open(path, 'rb') as file:
+
 			print (path)
+			sock.send((os.path.split(path)[1]).encode())
+			time.sleep(1)
 			sock.send(base64.encodebytes(file.read()).decode('utf-8').encode())
+
+			time.sleep(5)
+			sock.send(zagotovka)
+			time.sleep(1)
 
 	#sock.send(file.read())
 	#################################
 	#sock.send(data.encode())
-	s2 = sock.recv(4096)
-	print(s2.decode("UTF-8"))
+	#s2 = sock.recv(4096)
+	#print(s2.decode("UTF-8"))
 	sock.close()
 	#############################
-	sends.mainloop()
+	#sends.mainloop()
 
 
 ###CHOOSE FILE###
@@ -66,7 +84,7 @@ def choose_file():
 	global SetMails
 	file_path =  filedialog.askopenfilename(initialdir = "/",
 											title = "Select file", filetypes = (("all files","*.*"),("jpeg files","*.jpg")))
-	if len(file_path)>3:
+	if len(file_path)>3 and file_path not in SetPaths:
 		tree1.insert("",0, text=os.path.split(file_path)[1], values=(str(os.path.getsize(file_path)/1024//1)+"KB"))
 		SetPaths.add(file_path)
 		if SetMails:
