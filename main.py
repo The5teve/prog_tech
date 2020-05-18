@@ -14,8 +14,17 @@ root.title("Allsafe")
 root.resizable(False, False)
 root.iconbitmap('img/allsafe.ico')
 
-
-
+SetPaths= set()
+SetMails= set()
+class Colors:
+	dark="#191919"
+	halfdark="#202020"
+	grey="#B3B3B3"
+class Phrase:
+	help1="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)"
+	help2="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links"
+	help3="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file"
+	expression = "Allsafe is a free program for the safe transfer of mail letters. "
 style = ttk.Style()
 style.theme_use("clam")
 style.configure("Treeview", 
@@ -36,11 +45,11 @@ def main_def_send_mail():
 	#pb.start(200)
 
 	show_sec0nd_frame()
-	RANDOM = Label(sec0nd_frame, text='Please wait...', bg="#202020", fg="white")
-	RANDOM.place(x=100,y=100)
-	pb = ttk.Progressbar(sec0nd_frame, length=250)
-	pb.place(x=100, y=50)
-	pb.start(200)
+	sentmsg = Label(sec0nd_frame, text='Your messgae have been sent', bg=Colors.halfdark, fg="white")
+	sentmsg.place(x=100,y=100)
+	#pb = ttk.Progressbar(sec0nd_frame, length=250)
+	#pb.place(x=100, y=50)
+	#pb.start(200)
 	#############################
 	sock = socket.socket()
 	sock.connect(('25.84.180.124', 8080)) 
@@ -51,17 +60,17 @@ def main_def_send_mail():
 	#handle = open("txt.txt","r") 
 	#data = handle.read()
 	#handle.close()
+	stopmsg=b'stop'
 	for path in SetPaths:
-		zagotovka=b'stop'
+
 		with open(path, 'rb') as file:
 
 			print (path)
 			sock.send((os.path.split(path)[1]).encode())
 			time.sleep(1)
 			sock.send(base64.encodebytes(file.read()).decode('utf-8').encode())
-
-			time.sleep(5)
-			sock.send(zagotovka)
+			time.sleep(3)
+			sock.send(stopmsg)
 			time.sleep(1)
 
 	#sock.send(file.read())
@@ -75,7 +84,7 @@ def main_def_send_mail():
 
 
 ###CHOOSE FILE###
-SetPaths= set()
+
 def choose_file():
 	global tree1
 	global file_path
@@ -98,18 +107,18 @@ def place_help_text(number):
 	print(os.urandom(3))
 	
 	if number == 1:
-		myHelp1=Label(helps, bg="#B3B3B3", borderwidth=0, fg="#333333",
-		text="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)")		
+		myHelp1=Label(helps, bg=Colors.grey, borderwidth=0, fg="#333333",
+		text=Phrase.help1)		
 		myHelp1.place(x=10,y=25)	
 
 	elif number == 2:
-		myHelp2=Label(helps,bg="#B3B3B3", borderwidth=0, fg="#333333", 
-		text="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links")
+		myHelp2=Label(helps,bg=Colors.grey, borderwidth=0, fg="#333333", 
+		text=Phrase.help2)
 		myHelp2.place(x=10,y=200)
 
 	else:
-		myHelp3=Label(helps,bg="#B3B3B3", borderwidth=0, fg="#333333", 
-		text="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file")
+		myHelp3=Label(helps,bg=Colors.grey, borderwidth=0, fg="#333333", 
+		text=Phrase.help3)
 		myHelp3.place(x=10,y=350)
 	
 
@@ -118,7 +127,7 @@ def place_help_text(number):
 def show_help():
     global helps
     helps = Toplevel()
-    helps['bg'] = '#B3B3B3'
+    helps['bg'] = Colors.grey
     helps.geometry("660x450")
     helps.resizable(False, False)
     #Label(a, text="About this").pack(expand=1)
@@ -130,15 +139,15 @@ def show_help():
     LabelHelp.place(x=350,y=0)
 
     helpbutton1=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
-    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: place_help_text(1))
+    				 bg=Colors.grey, borderwidth=0, fg="grey", command=lambda: place_help_text(1))
     helpbutton1.place(x=600,y=50)
 
     helpbutton2=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
-    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: place_help_text(2))
+    				 bg=Colors.grey, borderwidth=0, fg="grey", command=lambda: place_help_text(2))
     helpbutton2.place(x=600,y=200)
 
     helpbutton3=Button(helps,text="What\n is it?",font=("Arial Bold", 13),
-    				 bg="#B3B3B3", borderwidth=0, fg="grey", command=lambda: place_help_text(3))
+    				 bg=Colors.grey, borderwidth=0, fg="grey", command=lambda: place_help_text(3))
     helpbutton3.place(x=600,y=350)
 	
     helps.mainloop()
@@ -169,7 +178,7 @@ def button_home():
 def show_send_letter():
 	return
 #Set for mails
-SetMails= set()
+
 def valid_check():
 	global emailplace
 	global tree
@@ -180,8 +189,9 @@ def valid_check():
 		if char not in alphabet:
 			messagebox.showerror("Error", "Wrong email.")
 			return False
-	if temp.find("@")==-1 or temp.find(".")==-1:
+	if  temp.find("@")==-1 or  temp.find(".")==-1:
 		messagebox.showerror("Error", "Wrong mail type.")
+		return False
 	else:	
 		if temp.find("@") and temp.find(".") and temp.index("@")+1!=temp.index(".") and temp.index(".")!=len(temp)-1  and temp.count("@")==1:
 			if temp not in SetMails:
@@ -198,14 +208,14 @@ def valid_check():
 
 helps = Label()
 #Frames 
-my_frame = Frame(root, bg="#191919", width=150, height=450)
+my_frame = Frame(root, bg=Colors.dark, width=150, height=450)
 my_frame.grid(row=0, column=0, rowspan=10)
-my_frame1 = Frame(root, bg="#202020", width=650, height=450)
+my_frame1 = Frame(root, bg=Colors.halfdark, width=650, height=450)
 my_frame1.grid(row=0, column=1)
 
 
 #Allsafe Title
-status = Button(my_frame, text="Allsafe Build 0.1.9", bg="#191919", borderwidth=0,
+status = Button(my_frame, text="Allsafe Build 0.1.9", bg=Colors.dark, borderwidth=0,
 				 fg="#104981", font=("Arial Bold", 10), command=button_home)
 status.place(x=15,y=10)
 #How it works
@@ -215,10 +225,10 @@ helps = Button(my_frame, text="How it works?", bg="#181818",
 helps.place(x=33, y=400)
 
 #News Label
-newslabel = Label(my_frame1, text="Allsafe", bg="#202020",
+newslabel = Label(my_frame1, text="Allsafe", bg=Colors.halfdark,
 				 fg="#171717", font=("Arial Bold", 90))
 newslabel.place(x=270, y=150)
-newslabel1 = Label(my_frame1, text="cyberletters", bg="#202020", 
+newslabel1 = Label(my_frame1, text="cyberletters", bg=Colors.halfdark, 
 					fg="#171717", font=("Arial Bold", 30))
 newslabel1.place(x=370, y=260)
 
@@ -231,23 +241,27 @@ logoLabel.place(x=100,y=150)
 
 
 #Switch Buttons
-button_switch1 = Button(my_frame, text="Let's send something!",bg="#181818", fg="lightgrey", borderwidth=0, command=show_f1rst_frame)
+button_switch1 = Button(my_frame, text="Let's send something!",bg="#181818",
+						 fg="lightgrey", borderwidth=0, command=show_f1rst_frame)
 button_switch1.place(x=20, y=100)
 
-button_switch2 = Button(my_frame, text="Show reference", bg="#181818", fg="lightgrey", borderwidth=0, command=show_sec0nd_frame)
+button_switch2 = Button(my_frame, text="Show reference", bg="#181818",
+						 fg="lightgrey", borderwidth=0, command=show_sec0nd_frame)
 button_switch2.place(x=20, y=130)
 
 
 #switching frames
-f1rst_frame = Frame(root, bg="#202020", width=650, height=450)
-subframe = Frame(f1rst_frame, width=610, height=310, bg="#1b2c45",borderwidth=2, relief="ridge")
+f1rst_frame = Frame(root, bg=Colors.halfdark, width=650, height=450)
+subframe = Frame(f1rst_frame, width=610, height=310,
+				 bg="#1b2c45",borderwidth=2, relief="ridge")
 subframe.place(x=20, y=60)
 
 logosend = ImageTk.PhotoImage(Image.open("img/logosend.png"))
 logoSendL = Label(subframe,image=logosend, borderwidth=0)
 logoSendL.place(x=220,y=80)
 
-button_addfile = Button(subframe, padx=50, pady=10, text="Choose File", bg="#282828", fg="lightgrey", command=choose_file, borderwidth=0)
+button_addfile = Button(subframe, padx=50, pady=10, text="Choose File",
+						 bg="#282828", fg="lightgrey", command=choose_file, borderwidth=0)
 button_addfile.place(x=10,y=80)
 
 Sending1= Label(subframe, text="Enter email here", borderwidth=0, bg="#1b2c45", fg="#666464")
@@ -257,7 +271,8 @@ emailplace= Entry(subframe,width=45,bg="lightgrey", fg="grey", borderwidth=0)
 emailplace.place(x=10, y=10)
 
 #addmail Button
-addmail=Button(subframe, text="add mail", bg="#1b2c45", fg="lightgrey", pady=1, command=valid_check, borderwidth=0)
+addmail=Button(subframe, text="add mail", bg="#1b2c45", 
+				fg="lightgrey", pady=1, command=valid_check, borderwidth=0)
 addmail.place(x=295, y=9)
 
 
@@ -281,7 +296,8 @@ tree1.place(x=400, y=155)
 
 
 
-Sending2= Label(subframe, text="Choose files yow want to send", borderwidth=0, bg="#1b2c45", fg="#666464")
+Sending2= Label(subframe, text="Choose files yow want to send",
+				 borderwidth=0, bg="#1b2c45", fg="#666464")
 Sending2.place(x=10, y=130)
 Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11),
 					 bg="grey",state=DISABLED, command=main_def_send_mail, borderwidth=0)
@@ -295,10 +311,10 @@ Button_send.place(x=8, y=255)
 
 
 
-sec0nd_frame = Frame(root, bg="#202020", width=650, height=450)
-WarningLabel = Label(sec0nd_frame, bg="#202020",
-					 text="AllSafe is a free program for the safe \n \ntransfer of mail letters. ", fg="white") 
-WarningLabel.place(x=200, y=180)
+sec0nd_frame = Frame(root, bg=Colors.halfdark, width=650, height=450)
+WarningLabel = Label(sec0nd_frame, bg=Colors.halfdark,
+					 text=Phrase.expression, fg="lightgrey") 
+WarningLabel.place(x=300, y=400)
 #Some things
 
 
