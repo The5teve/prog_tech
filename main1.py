@@ -7,6 +7,8 @@ from PIL import ImageTk,Image
 import socket
 import base64
 import time
+import RSA12
+import shutil
 
 root = Tk()
 root.geometry("800x450")
@@ -45,17 +47,15 @@ def main_def_send_mail():
 	#pb.place(x=100, y=50)
 	#pb.start(200)
 
-	#######show_sec0nd_frame()
-	#######sentmsg = Label(sec0nd_frame, text='Your messgae have been sent', bg=Colors.halfdark, fg="white")
-	#######sentmsg.place(x=100,y=100)
+	show_sec0nd_frame()
+	sentmsg = Label(sec0nd_frame, text='Your messgae have been sent', bg=Colors.halfdark, fg="white")
+	sentmsg.place(x=100,y=100)
 	#pb = ttk.Progressbar(sec0nd_frame, length=250)
 	#pb.place(x=100, y=50)
 	#pb.start(200)
 	#############################
 	sock = socket.socket()
-	print("[+]Connecting to the server...")
 	sock.connect(('25.84.180.124', 8008))
-	print("[+]Successfuly connected")
 	sock.send(str(len(SetPaths)).encode())
 #45.137.190.131
 	                            #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
@@ -66,34 +66,43 @@ def main_def_send_mail():
 	stopmsg=b'stop'
 
 	for path in SetPaths:
+		e, d, n = RSA12.generateKeys(keysize=32)
+		
+    	# путь к файлу
+		if os.path.basename(path)!="_mails.txt":
+			shutil.copy(path,os.getcwd())
+		RSA12.encrypt_file(os.path.basename(path), e, n)
+		os.remove(os.path.basename(path))
+		with open("enc_"+os.path.basename(path), 'rb') as file:
 
-		with open(path, 'rb') as file:
-
+			#print ("Sending "+path)
 			if os.path.basename(path)=="_mails.txt":
 				print("[+]Sending info about mails...")
-			else:
-				print ("[+]Sending "+os.path.basename(path)+"...")
-			sock.send((os.path.split(path)[1]).encode())
-			time.sleep(1)
-			sock.send(base64.encodebytes(file.read()).decode('utf-8').encode())
+				sock.send(str(d).encode()+b'_'+str(n).encode()+"_mails".encode()+(os.path.splitext(os.path.split(path)[1])[1]).encode())
+				print("[+]Successfuly.Preparing next file... ")
+			else:	
+				print("[+]Sending "+os.path.basename(path)+"...")
+				sock.send(str(d).encode()+b'_'+str(n).encode()+(os.path.splitext(os.path.split(path)[1])[1]).encode())
+				print("[+]File successfuly sent. Preparing next file...")
+			time.sleep(10)
+			sock.send(file.read())
 			time.sleep(5)
-			print("[+]File successfuly sent. Preparing next file...")
 			sock.send(stopmsg)
 			time.sleep(1)
-	print("[+] "+str(len(SetPaths)-1)+ " file(s) have been sent!")
+		os.remove("enc_"+os.path.basename(path))
 	#sock.send(file.read())
 	#################################
 	#sock.send(data.encode())
 	#s2 = sock.recv(4096)
 	#print(s2.decode("UTF-8"))
+	print("[+] "+str(len(SetPaths)-1)+ " file(s) have been sent!")
 	sock.close()
 	#############################
 	#sends.mainloop()
-	my_clear()
+
 
 ###CHOOSE FILE###
-def my_clear():
-	return
+
 def choose_file():
 	global tree1
 	global file_path
