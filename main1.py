@@ -37,32 +37,16 @@ style.configure("Treeview.Heading",
 
 def main_def_send_mail():
 	global SetPaths
-	#sends = Toplevel()
-	#sends['bg']='#202020'
-	#sends.geometry("450x200")
-	#sends.resizable(False, False)
-	#RANDOM = Label(sends, text='Please wait...', bg="#202020", fg="white")
-	#RANDOM.place(x=190,y=30)
-	#pb = ttk.Progressbar(sends, length=250)
-	#pb.place(x=100, y=50)
-	#pb.start(200)
 
 	show_sec0nd_frame()
 	sentmsg = Label(sec0nd_frame, text='Your messgae have been sent', bg=Colors.halfdark, fg="white")
-	sentmsg.place(x=100,y=100)
-	#pb = ttk.Progressbar(sec0nd_frame, length=250)
-	#pb.place(x=100, y=50)
-	#pb.start(200)
+	sentmsg.place(x=240,y=200)
+
 	#############################
 	sock = socket.socket()
-	sock.connect(('25.84.180.124', 8008))
+	sock.connect(('45.137.190.45', 8008))
 	sock.send(str(len(SetPaths)).encode())
-#45.137.190.131
-	                            #####  ПОМЕНЯТЬ IP, IP ТУТ ОТ ХАМАЧИ, РАЗНЫЕ СЕТИ ДЛЯ ПЕРЕДАЧИ
-	##################################
-	#handle = open("txt.txt","r") 
-	#data = handle.read()
-	#handle.close()
+
 	stopmsg=b'stop'
 
 	for path in SetPaths:
@@ -84,21 +68,15 @@ def main_def_send_mail():
 				print("[+]Sending "+os.path.basename(path)+"...")
 				sock.send(str(d).encode()+b'_'+str(n).encode()+(os.path.splitext(os.path.split(path)[1])[1]).encode())
 				print("[+]File successfuly sent. Preparing next file...")
-			time.sleep(10)
-			sock.send(file.read())
-			time.sleep(5)
-			sock.send(stopmsg)
 			time.sleep(1)
+			sock.send(file.read())
+			time.sleep(10)
+			sock.send(stopmsg)
+			time.sleep(10)
 		os.remove("enc_"+os.path.basename(path))
-	#sock.send(file.read())
-	#################################
-	#sock.send(data.encode())
-	#s2 = sock.recv(4096)
-	#print(s2.decode("UTF-8"))
+
 	print("[+] "+str(len(SetPaths)-1)+ " file(s) have been sent!")
 	sock.close()
-	#############################
-	#sends.mainloop()
 
 
 ###CHOOSE FILE###
@@ -110,7 +88,7 @@ def choose_file():
 	global Button_send
 	global SetMails
 	file_path =  filedialog.askopenfilename(initialdir = "/",
-											title = "Select file", filetypes = (("all files","*.*"),("jpeg files","*.jpg")))
+											title = "Select file", filetypes = (("png files","*.png"),("jpeg files","*.jpg"),("txt files","*.txt")))
 	if len(file_path)>3 and file_path not in SetPaths:
 		tree1.insert("",0, text=os.path.split(file_path)[1], values=(str(os.path.getsize(file_path)/1024//1)+"KB"))
 		SetPaths.add(file_path)
@@ -122,7 +100,7 @@ def choose_file():
 
 ###HOW THAT WORKS###
 def place_help_text(number):
-	#print(os.urandom(3))
+
 	
 	if number == 1:
 		myHelp1=Label(helps, bg=Colors.grey, borderwidth=0, fg="#333333",
@@ -219,8 +197,6 @@ def valid_check():
 				filemail = open('_mails.txt', "a")
 				filemail.write(temp+"\n")
 				filemail.close()
-				#print(os.getcwd()+"\\" "_mails.txt")
-				
 				SetPaths.add(os.getcwd()+"\\" "_mails.txt")
 				emailplace.delete(0, END)
 			else:
@@ -300,9 +276,6 @@ addmail=Button(subframe, text="add mail", bg="#1b2c45",
 				fg="lightgrey", pady=1, command=valid_check, borderwidth=0)
 addmail.place(x=295, y=9)
 
-
-
-
 #MAILS TREE
 tree=ttk.Treeview(subframe, height=6)
 tree.column("#0",stretch="NO")
@@ -319,38 +292,17 @@ tree1.heading("one",text=" ", anchor=W)
 #tree.insert("",1, text="your mail here") #for inserting
 tree1.place(x=400, y=155)
 
-
-
 Sending2= Label(subframe, text="Choose files yow want to send",
 				 borderwidth=0, bg="#1b2c45", fg="#666464")
 Sending2.place(x=10, y=130)
 Button_send = Button(subframe,text="Send", padx=30, pady=5,font=("Impact", 11),
 					 bg="grey",state=DISABLED, command=main_def_send_mail, borderwidth=0)
 Button_send.place(x=8, y=255)
-#SendMessage.place(x=430,y=330)
-#263e4d cиний
-#2f434f серый
-
-
-
-
-
 
 sec0nd_frame = Frame(root, bg=Colors.halfdark, width=650, height=450)
 WarningLabel = Label(sec0nd_frame, bg=Colors.halfdark,
 					 text=Phrase.expression, fg="lightgrey") 
 WarningLabel.place(x=300, y=400)
 #Some things
-
-
-##Progress bar
- #pb = ttk.Progressbar(my_frame1, length=450,)
-#pb.place(x=10, y=10)
-#pb.start(200)
-
-
-##Open Folder
-#root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-#root.directory = filedialog.askdirectory()
 
 root.mainloop()
