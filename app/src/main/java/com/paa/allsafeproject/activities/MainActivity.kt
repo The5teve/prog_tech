@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.paa.allsafeproject.FileUtils
 import com.paa.allsafeproject.R
 import com.paa.allsafeproject.adapters.MailListAdapter
 import com.paa.allsafeproject.adapters.MainActivityFileListAdapter
@@ -12,6 +13,8 @@ import com.paa.allsafeproject.data_structs.AttachedMail
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+
 
 //    private val REQUEST_CODE_OK = 1
 //    private val REQUEST_CODE_ERROR = 4
@@ -70,6 +73,13 @@ class MainActivity : AppCompatActivity() {
             if(files.size!=0) editFilesIntent.putExtra("FILES", files)
             Log.d(TAG, "files.size = ${files.size}")
             startActivityForResult(editFilesIntent,1)
+        }
+        button_send.setOnClickListener {
+            // Создание файла адресатов
+            val mailsFile = FileUtils.createMailListFile(mails, applicationContext)
+            Log.d(TAG, "Mails file at ${mailsFile.path} : ${mailsFile.length()}")
+            // ...
+            // Дальнейший процесс работы целесообразно вынести в отдельный класс, контроллирующий сетевое подключение с сервером
         }
     }
 
