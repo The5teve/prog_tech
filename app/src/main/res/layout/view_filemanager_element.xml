@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView android:id="@+id/iw_fileManagerElement_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
+
+    <TextView
+        android:id="@+id/tw_fileManagerElement_name"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iw_fileManagerElement_icon"
+        android:text="tw_fileManagerElement_name"
+        android:textColor="@android:color/black" />
+    <!--    <CheckBox android:id="@+id/checkbox_fileManagerElement_check"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_width="40dp"-->
+    <!--        android:layout_height="40dp"/>-->
+
+</RelativeLayout>

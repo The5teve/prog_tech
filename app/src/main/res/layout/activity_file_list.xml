@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".FileListActivity">
+    tools:context=".activities.FileListActivity">
 
     <RelativeLayout android:id="@+id/tw_fileList_title"
         style="@style/lists_title"

@@ -1,12 +1,10 @@
-package com.paa.allsafeproject
+package com.paa.allsafeproject.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.paa.allsafeproject.adapters.FileListAdapter
+import com.paa.allsafeproject.R
 import com.paa.allsafeproject.adapters.MailListAdapter
 import com.paa.allsafeproject.adapters.MainActivityFileListAdapter
 import com.paa.allsafeproject.data_structs.AttachedFile
@@ -38,18 +36,20 @@ class MainActivity : AppCompatActivity() {
     private fun fillMailListView(receivedMails: ArrayList<AttachedMail>?) {
         if (receivedMails != null) {
             mails = receivedMails
-            val mailListAdapter:MailListAdapter = MailListAdapter(applicationContext, R.layout.view_mail_rec, mails)
+            val mailListAdapter:MailListAdapter = MailListAdapter(applicationContext,
+                R.layout.view_mail_rec, mails)
             MainActivity_listView_mailList.adapter = mailListAdapter
         } else {
             Log.d(TAG, "fillMailList: ArrayList of received mails is null")
         }
     }
 
-    private fun fillFileList(receivedFiles: ArrayList<AttachedFile>?) {
+    private fun fillFileListView(receivedFiles: ArrayList<AttachedFile>?) {
         Log.d(TAG, "fillFileList: received ArrayList of AttachedFiles = $receivedFiles")
         if (receivedFiles != null) {
             files = receivedFiles
-            var adapter: MainActivityFileListAdapter = MainActivityFileListAdapter(applicationContext, R.layout.view_file_rec_small, files)
+            var adapter: MainActivityFileListAdapter = MainActivityFileListAdapter(applicationContext,
+                R.layout.view_file_rec_small, files)
             MainActivity_ListView_fileList.adapter = adapter
             Log.d(TAG, "files size ${files.size}")
         } else {
@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         button_toFiles.setOnClickListener {
             val editFilesIntent = Intent(this, FileListActivity::class.java)
             if(files.size!=0) editFilesIntent.putExtra("FILES", files)
+            Log.d(TAG, "files.size = ${files.size}")
             startActivityForResult(editFilesIntent,1)
         }
     }
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         // отображение почт
         fillMailListView(data?.getParcelableArrayListExtra("MAILS"))
         // отображение файлов
-        fillFileList(data?.getParcelableArrayListExtra("FILES"))
+        fillFileListView(data?.getParcelableArrayListExtra("FILES"))
         super.onActivityResult(requestCode, resultCode, data)
     }
 }

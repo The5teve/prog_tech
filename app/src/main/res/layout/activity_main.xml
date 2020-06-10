@@ -55,7 +55,8 @@
             <ListView android:id="@+id/MainActivity_ListView_fileList"
                 style="@style/mainBlock_lists"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF">
             </ListView>
 
             <View
@@ -88,6 +89,7 @@
 
             <ListView android:id="@+id/MainActivity_listView_mailList"
                 style="@style/mainBlock_lists"
+                android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
