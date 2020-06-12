@@ -3,7 +3,7 @@ package com.paa.allsafeproject.data_structs
 import android.os.Parcel
 import android.os.Parcelable
 
-class AttachedMail(val mail: String?): Parcelable {
+data class AttachedMail(val mail: String?): Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()) {
     }
 

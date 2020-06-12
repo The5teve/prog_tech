@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <TextView android:id="@+id/tw_toPreviousDirectory"
+    <TextView android:id="@+id/tv_toPreviousDirectory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="..."
         android:padding="10dp"
         android:textSize="20dp"/>
-    <ListView android:id="@+id/lw_files"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_files"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        tools:listitem="@layout/view_file_rec_small"/>
 </LinearLayout>

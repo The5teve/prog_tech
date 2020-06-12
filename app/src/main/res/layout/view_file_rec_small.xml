@@ -2,14 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_file"
+        android:id="@+id/ic_file_rec_small_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"/>
-    <TextView android:id="@+id/tw_file_rec_small_name"
+        android:src="@drawable/ic_file"
+        />
+
+    <TextView
+        android:textSize="40sp"
+        android:id="@+id/tv_file_rec_small_name"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="tw_file_rec_small_name"/>
+        android:layout_height="wrap_content"
+        android:text="tv_file_rec_small_name"
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:scrollHorizontally="false"/>
 </LinearLayout>

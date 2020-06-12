@@ -5,7 +5,7 @@ import android.os.Parcelable
 import java.io.File
 import java.nio.file.Files
 
-class AttachedFile(val path: String,
+data class AttachedFile(val path: String,
                    val fileObj: File=File(path),
                    var name: String=fileObj.name,
                    var size: Int= (fileObj.length().toInt())) : Parcelable {
