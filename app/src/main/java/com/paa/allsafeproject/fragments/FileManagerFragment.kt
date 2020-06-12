@@ -96,11 +96,11 @@ class FileManagerFragment(val ROOT_DIR: File) : DialogFragment(),
 //        }
 //    }
 
-    private fun createTreeFilesArrayList(listFiles: Array<File>?): ArrayList<TreeFile> {
-        Log.d(TAG, "Files received - ${listFiles?.size}")
+    private fun createTreeFilesArrayList(fileList: Array<File>?): ArrayList<TreeFile> {
+        Log.d(TAG, "Files received - ${fileList?.size}")
         val treeFileMutableList = ArrayList<TreeFile>()
-        if (listFiles != null) {
-            for (file in listFiles) {
+        if (fileList != null) {
+            for (file in fileList) {
                 if (file.isHidden) continue // Пропуск скрытых файлов
                 var tf = TreeFile(file)
                 Log.d(TAG, "createTreeFilesArrayList: created treeFile - $tf")
