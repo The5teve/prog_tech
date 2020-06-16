@@ -7,6 +7,7 @@ import RSA_1
 from subprocess import Popen
 
 
+
 un=open("UserNumber.txt","r")   #открываем .txt, в котором ведём учёт  User и кладём в переменную i число
 i = int(un.read())
 un.close()
@@ -23,7 +24,15 @@ while True:
 
     print ('connected:', addr) #ip подключенного клиента
 
-    numfile = conn.recv(10) #читаем порциями по 10 байт, узнаём сколько будем файлов
+      
+    numfile = conn.recv(10)    #читаем порциями по 10 байт, узнаём сколько будем файлов
+    if not numfile:
+        print('Empty send')
+        conn.close()
+        continue
+
+        
+    
     numfile = numfile.decode("UTF-8") #переводим из байтов в кодировку UTF-8
     res = b'' #переменная, в которую будут склдываться порции байтов, из которых будут декодироваться файлы
     i+=1 #счётчик User
