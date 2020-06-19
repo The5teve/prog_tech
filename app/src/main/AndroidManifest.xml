@@ -3,6 +3,7 @@
     package="com.paa.allsafeproject">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.FileListActivity" />
         <activity android:name=".activities.MailListActivity" />
+        <activity android:name=".activities.TransmissionActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

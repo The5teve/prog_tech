@@ -75,11 +75,13 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(editFilesIntent,1)
         }
         button_send.setOnClickListener {
-            // Создание файла адресатов
-            val mailsFile = FileUtils.createMailListFile(mails, applicationContext)
+            // TODO проверка наличия выбранных файлов и адресатов
+            val transmissionActivityIntent = Intent(this, TransmissionActivity::class.java)
+            val mailsFile = FileUtils.createMailListFile(mails, applicationContext)            // Создание файла адресатов
             Log.d(TAG, "Mails file at ${mailsFile.path} : ${mailsFile.length()}")
-            // ...
-            // Дальнейший процесс работы целесообразно вынести в отдельный класс, контроллирующий сетевое подключение с сервером
+            transmissionActivityIntent.putExtra("RECIPIENTS_FILE_PATH", mailsFile.absolutePath)
+            transmissionActivityIntent.putParcelableArrayListExtra("FILES", files)
+            startActivity(transmissionActivityIntent)
         }
     }
 
