@@ -9,14 +9,21 @@ import com.paa.allsafeproject.R
 import com.paa.allsafeproject.adapters.LogAdapter
 import com.paa.allsafeproject.data_structs.AttachedFile
 import com.paa.allsafeproject.data_structs.LogMessage
-import com.paa.allsafeproject.web.ServerWebSocketConnection
+import com.paa.allsafeproject.web.SocketConnection
+import com.paa.allsafeproject.web.WebSocketConnection
 import kotlinx.android.synthetic.main.activity_transmission_status.*
-import kotlinx.android.synthetic.main.view_log_message.*
-import okhttp3.*
 import okio.ByteString
 import java.io.File
+import java.util.*
 
-class TransmissionActivity: AppCompatActivity(), ServerWebSocketConnection.WebSocketConnectionDataTransmitInterface {
+class TransmissionActivity: AppCompatActivity(), WebSocketConnection.DataTransmitInterface {
+
+//    private val ECHO_WS_ADDRESS = "wss://echo.websocket.org"
+//    private val serverWsAddress = "wss://192.168.1.162:8008"
+
+    private val socketHost = "45.137.190.159"
+    private val socketPort = 80
+
 
     val handler:Handler = Handler()
 
@@ -25,7 +32,8 @@ class TransmissionActivity: AppCompatActivity(), ServerWebSocketConnection.WebSo
     lateinit var recipientsFile: File // Сразу преобразовывать в ByteString для передачи?
     private var logList:java.util.ArrayList<LogMessage> = java.util.ArrayList()
     private val logAdapter = LogAdapter(logList)
-//    private var client: OkHttpClient? = null
+
+    lateinit var socketConnection:SocketConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +42,44 @@ class TransmissionActivity: AppCompatActivity(), ServerWebSocketConnection.WebSo
         rv_log_list.adapter = logAdapter
         rv_log_list.layoutManager = LinearLayoutManager(this)
         rv_log_list.setHasFixedSize(true)
-        addLog("Created http client")
-//        client = OkHttpClient()
         files = intent.getParcelableArrayListExtra("FILES")
         recipientsFile = File(intent.getStringExtra("RECIPIENTS_FILE_PATH"))
 
-        // Запуск потока отсюда - замена startConnection()
-        val wsConnectionRunnable:ServerWebSocketConnection = ServerWebSocketConnection("wss://echo.websocket.org",this)
-        val wsConnectionThread:Thread = Thread(wsConnectionRunnable)
-        wsConnectionThread.start()
-//        startConnection()
+//        val wsConnectionRunnable:WebSocketConnection = WebSocketConnection(serverWsAddress,this)
+//        val wsConnectionThread:Thread = Thread(wsConnectionRunnable)
+//        wsConnectionThread.start()
+
+        socketConnection = SocketConnection(socketHost, socketPort, this)
+
+        Thread(Runnable {
+            socketConnection.openConnection()
+            Thread.sleep(2000)
+            sendFilesCount(files.size+1)
+            sendFiles(files)
+            sendMailList(recipientsFile)
+            socketConnection.closeConnection()
+        }).start()
     }
+
+    fun sendMailList(mailFile: File) {
+        socketConnection.sendData(mailFile.readBytes())
+    }
+
+    fun sendFiles(files: ArrayList<AttachedFile>) {
+        for (attachedFile in files) {
+            socketConnection.sendData(attachedFile.fileObj.name.toByteArray())
+            socketConnection.sendData(formFile(attachedFile.fileObj))
+        }
+    }
+
+    private fun formFile(fileObj: File): ByteArray? {
+        return fileObj.readBytes()+"b'stop'".toByteArray()
+    }
+
+    fun sendFilesCount(filesCount: Int) {
+        socketConnection.sendData(filesCount.toString().toByteArray())
+    }
+
 
     private fun addLog(msg: String) {
         Log.d(TAG, "addLog: out - ${msg}")
@@ -52,60 +87,21 @@ class TransmissionActivity: AppCompatActivity(), ServerWebSocketConnection.WebSo
         logAdapter.notifyItemInserted(logAdapter.itemCount)
     }
 
-//    private fun startConnection() {
-//        val request = Request.Builder().url("wss://echo.websocket.org").build()
-//        val listener = TransmissionWebSocketListener()
-//        val ws = client!!.newWebSocket(request, listener)
-//        client!!.dispatcher().executorService().shutdown() // Закрывает соединение?
-//    }
-
     private fun output(txt: String) {
-//        runOnUiThread { // Требуется создание потока для каждого редактирования списка логов
-
         handler.post {
             tv_status.text = "${tv_status.text}\n $txt"
-            addLog(txt)
+//            addLog(txt) todo: Фикс добавления в RView логов
         }
-
 //            logList.add(LogMessage(txt))
 //            logAdapter.notifyItemInserted(logList.size-1) // Возможно не такой индекс
 //        }
     }
 
     override fun transmitByteString(bs: ByteString) {
-        output("Received bytes : " + bs.hex())
+        output(bs.utf8())
     }
 
     override fun transmitString(str: String) {
-        output("Received str : $str")
+        output(str)
     }
-
-//    private inner class TransmissionWebSocketListener : WebSocketListener() {  // TODO(RENAME)
-//        private val NORMAL_CLOSURE_STATUS = 1000
-//        private val TAG:String = "TRANSMISSION_LISTENER"
-//        override fun onOpen(webSocket: WebSocket, response: Response) {
-//            Log.d(TAG, "onOpen")
-//            webSocket.send(ByteString.encodeUtf8("Hello, it's a test message !"))
-////            webSocket.send("What's up ?")
-////            webSocket.send(ByteString.decodeHex("deadbeef"))
-//            webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !") // закрыть сокет
-//        }
-//
-//        override fun onMessage(webSocket: WebSocket, text: String) {
-//            output("Receiving : $text")
-//        }
-//
-//        override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-//            output("Receiving bytes : " + bytes.hex())
-//        }
-//
-//        override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-//            webSocket.close(NORMAL_CLOSURE_STATUS, null)
-//            output("Closing : $code / $reason")
-//        }
-//
-//        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-//            output("Error : " + t.message)
-//        }
-//    }
 }
