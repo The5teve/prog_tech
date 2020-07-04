@@ -9,12 +9,13 @@ import base64
 import time
 import RSA12
 import shutil
-
+import plyer
 root = Tk()
 root.geometry("800x450")
 root.title("Allsafe")
 root.resizable(False, False)
 root.iconbitmap('img/allsafe.ico')
+root.eval('tk::PlaceWindow %s center' % root.winfo_pathname(root.winfo_id()))
 with open('_mails.txt', 'w', encoding='utf-8') as g:
 	g.write("")
 SetPaths= set()
@@ -26,7 +27,7 @@ class Colors:
 class Phrase:
 	help1="The program (desktop / mobile) sends a request to the server.\n Before sending a request It receives a response from the \n server with the public key, encrypts the files using the\nlibrary, and the key sends them to the server along\n with the recipients (lists by e-mail)"
 	help2="The file server generates responses to sender requests, generates a\n key pair, sends the public key to the user, receives \nfiles, decrypts and generates download links"
-	help3="The mail server takes all address and address files, sends\n links  to download files to all addresses. The recipient opens\n the mail, clicks the link, downloads the file"
+	help3="The mail server takes all address and address files, sends\n files. The recipient opens\n the mail, clicks the files, downloads the file"
 	expression = "Allsafe is a free program for the safe transfer of mail letters. "
 style = ttk.Style()
 style.theme_use("clam")
@@ -35,65 +36,143 @@ style.configure("Treeview",
 style.configure("Treeview.Heading", 
                 fieldbackground="red", foreground="black", backgroud="red", borderwidth=0)
 
+currIp="45.137.190.159"
+currPort=9009
 def main_def_send_mail():
 	global SetPaths
-
-	show_sec0nd_frame()
-	sentmsg = Label(sec0nd_frame, text='Your messgae have been sent', bg=Colors.halfdark, fg="white")
-	sentmsg.place(x=240,y=200)
+	global currIp
+	global currPort
+	sentmsg = Label(sec0nd_frame, text='Please Wait', bg=Colors.halfdark, fg="lightgrey")
+	sentmsg.place(x=200,y=170)
 
 	#############################
 	sock = socket.socket()
-	sock.connect(('45.137.190.45', 8008))
+
+	try: 
+		sock.connect((currIp, currPort))
+	except ConnectionRefusedError:
+		messagebox.showerror("Error", "Server is not avaliable.")
+		return
+	show_sec0nd_frame()
+	
 	sock.send(str(len(SetPaths)).encode())
-
 	stopmsg=b'stop'
-
+	progress = ttk.Progressbar(sec0nd_frame, orient = HORIZONTAL, 
+              length =200, mode = 'determinate') 
+	progress.place(x=200,y=195)
 	for path in SetPaths:
-		e, d, n = RSA12.generateKeys(keysize=32)
-		
-    	# путь к файлу
+		root.update()
+		# путь к файлу
+		fileKeys = sock.recv(512)
+		e, n =int(str(fileKeys.decode()).split("_")[0]), int(str(fileKeys.decode()).split("_")[1])
 		if os.path.basename(path)!="_mails.txt":
 			shutil.copy(path,os.getcwd())
 		RSA12.encrypt_file(os.path.basename(path), e, n)
+		root.update()
 		os.remove(os.path.basename(path))
 		with open("enc_"+os.path.basename(path), 'rb') as file:
 
 			#print ("Sending "+path)
 			if os.path.basename(path)=="_mails.txt":
 				print("[+]Sending info about mails...")
-				sock.send(str(d).encode()+b'_'+str(n).encode()+"_mails".encode()+(os.path.splitext(os.path.split(path)[1])[1]).encode())
+				sock.send(os.path.basename(path).encode())
 				print("[+]Successfuly.Preparing next file... ")
 			else:	
 				print("[+]Sending "+os.path.basename(path)+"...")
-				sock.send(str(d).encode()+b'_'+str(n).encode()+(os.path.splitext(os.path.split(path)[1])[1]).encode())
+				sock.send(os.path.basename(path).encode())
 				print("[+]File successfuly sent. Preparing next file...")
+			if os.path.basename(path)=="_mails.txt":	
+				sentmsg.config(text="Sending "+"info about mails"+"...")
+			else:
+				sentmsg.config(text="Sending "+str(os.path.basename(path))+"...")
 			time.sleep(1)
 			sock.send(file.read())
+			root.update()
 			time.sleep(10)
 			sock.send(stopmsg)
+			root.update()
 			time.sleep(10)
+			progress['value'] += 100/len(SetPaths)
 		os.remove("enc_"+os.path.basename(path))
+	sentmsg.config(text=str(len(SetPaths)-1)+ " file(s) have been sent!")
 
+	root.update()
 	print("[+] "+str(len(SetPaths)-1)+ " file(s) have been sent!")
+	progress.grid_forget()
 	sock.close()
-
-
+	plyer.notification.notify(message='Your files were sent successfully',app_name='Allsafe',title='Allsafe', )
+	root.after(100, root.quit())
 ###CHOOSE FILE###
 
+def change_ip():
+	global iplace
+	global portplace
+	changeIp = Toplevel()
+	changeIp.grab_set()
+	changeIp.focus_set()
+	changeIp['bg']="#191919"
+	changeIp.geometry("200x100")
+	changeIp.title("Change Ip")
+	changeIp.resizable(False, False)
+	iplace= Entry(changeIp,width=15,bg="lightgrey", fg="grey", borderwidth=0)
+	iplace.place(x=20, y=40)
+	ipLabel=Label(changeIp, bg=Colors.dark, borderwidth=0, fg="#333333",
+	text="enter Ip here.")		
+	ipLabel.place(x=20,y=20)	
+	portplace= Entry(changeIp,width=5,bg="lightgrey", fg="grey", borderwidth=0)
+	portplace.place(x=150, y=40)
+	hostLabel=Label(changeIp, bg=Colors.dark, borderwidth=0, fg="#333333",
+	text="port.")		
+	hostLabel.place(x=150,y=20)
+	changeIpBtn=Button(changeIp,text="Change",font=("Arial Bold", 13),bg=Colors.dark, borderwidth=0, fg="grey", command=check_ip)
+	changeIpBtn.place(x=65,y=60)
+	changeIp.mainloop()
+
+def check_ip():
+	global iplace
+	global portplace
+	global currIp
+	global currPort
+	ipvalue="1234567890."
+	ip = iplace.get()
+	port = portplace.get()
+	for char in ip:
+		if char not in ipvalue:
+			messagebox.showerror("Error", "Invalid parameters.")
+			return
+	for char in port:
+		if char not in ipvalue:
+			messagebox.showerror("Error", "Invalid parameters.")
+			return
+	if  ip.count(".")==3 and len(port)==4 and len(ip):
+		currIp=ip
+		currPort=port
+		messagebox.showwarning("Success", "Ip has been changed. This may cause server unavailability. Reload the program to return to the original values")
+	else:
+		messagebox.showerror("Error", "Invalid parameters.")
+
+
+
+	return
 def choose_file():
 	global tree1
 	global file_path
 	global SetPaths
 	global Button_send
 	global SetMails
+	alphabet= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.@~@#$%^-_(){}`'
 	file_path =  filedialog.askopenfilename(initialdir = "/",
 											title = "Select file", filetypes = (("png files","*.png"),("jpeg files","*.jpg"),("txt files","*.txt")))
-	if len(file_path)>3 and file_path not in SetPaths:
+	if len(file_path)>3 and file_path not in SetPaths  :
+		for char in os.path.split(file_path)[1]:
+			if char not in alphabet:
+				messagebox.showerror("Error", "Bad filename. Support only latin letters.")
+				return
 		tree1.insert("",0, text=os.path.split(file_path)[1], values=(str(os.path.getsize(file_path)/1024//1)+"KB"))
 		SetPaths.add(file_path)
 		if SetMails:
 			Button_send.config(state=NORMAL, bg="lightgrey")
+
 
 
 
@@ -163,6 +242,7 @@ def show_sec0nd_frame():
 	global my_frame1
 	my_frame1.grid_forget()
 	f1rst_frame.grid_forget()
+
 	sec0nd_frame.grid(row=0, column=1)
 
 def button_home():
@@ -246,8 +326,8 @@ button_switch1 = Button(my_frame, text="Let's send something!",bg="#181818",
 						 fg="lightgrey", borderwidth=0, command=show_f1rst_frame)
 button_switch1.place(x=20, y=100)
 
-button_switch2 = Button(my_frame, text="Show reference", bg="#181818",
-						 fg="lightgrey", borderwidth=0, command=show_sec0nd_frame)
+button_switch2 = Button(my_frame, text="change ip", bg="#181818",
+						 fg="lightgrey", borderwidth=0, command=change_ip)
 button_switch2.place(x=20, y=130)
 
 
